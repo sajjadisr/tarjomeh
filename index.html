@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilingual Translation Hub</title>
+    <link rel="stylesheet" href="./public/main.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Bilingual Translation Hub</h1>
+            <p>English ↔ Persian Translator</p>
+        </header>
+
+        <main class="main-content">
+            <div class="language-selector">
+                <button id="swap-languages" class="swap-btn" aria-label="Swap languages">
+                    <span class="swap-icon">⇄</span>
+                </button>
+            </div>
+
+            <div class="translation-area">
+                <div class="input-section">
+                    <div class="language-header">
+                        <select id="source-lang" class="lang-select">
+                            <option value="en">English</option>
+                            <option value="fa">Persian</option>
+                        </select>
+                    </div>
+                    <textarea 
+                        id="source-text" 
+                        class="text-input" 
+                        placeholder="Enter text to translate..."
+                        dir="auto"
+                    ></textarea>
+                </div>
+
+                <div class="action-section">
+                    <button id="translate-btn" class="translate-btn">
+                        Translate
+                    </button>
+                </div>
+
+                <div class="output-section">
+                    <div class="language-header">
+                        <select id="target-lang" class="lang-select">
+                            <option value="fa">Persian</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <textarea 
+                        id="translated-text" 
+                        class="text-output" 
+                        placeholder="Translation will appear here..."
+                        dir="auto"
+                        readonly
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="clear-btn" class="control-btn">Clear All</button>
+                <button id="copy-btn" class="control-btn">Copy Translation</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Bilingual Translation Hub &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+</html>
