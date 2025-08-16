@@ -1,75 +1,265 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bilingual Translation Hub</title>
-    <link rel="stylesheet" href="./public/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persian Community Translation Hub - ترجمه جامعه فارسی</title>
+  
+  <!-- Persian Font Support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Vazir Persian Font -->
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+  
+  <!-- Tailwind CSS will be injected by Vite -->
+  
+  <style>
+    /* Custom Persian font classes */
+    .font-persian {
+      font-family: 'Vazir', 'Tahoma', 'Arial', sans-serif;
+    }
+    
+    .font-english {
+      font-family: 'Inter', 'system-ui', sans-serif;
+    }
+    
+    /* RTL-specific adjustments */
+    [dir="rtl"] {
+      text-align: right;
+    }
+    
+    [dir="rtl"] .prose {
+      text-align: right;
+    }
+    
+    /* Better Persian text rendering */
+    .persian-text {
+      font-family: 'Vazir', 'Tahoma', 'Arial', sans-serif;
+      direction: rtl;
+      text-align: right;
+      line-height: 1.8;
+      font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    }
+    
+    /* Smooth transitions for language switching */
+    * {
+      transition: font-family 0.3s ease;
+    }
+    
+    /* Loading animation */
+    .loading-spinner {
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Custom scrollbar for better UX */
+    .custom-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f1f5f9;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    
+    /* Video player enhancements */
+    .video-container {
+      position: relative;
+      background: #000;
+    }
+    
+    .subtitle-overlay {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      max-width: 80%;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.4;
+      z-index: 10;
+    }
+    
+    /* Timeline enhancements */
+    .timeline-container {
+      position: relative;
+      height: 48px;
+      background: #e5e7eb;
+      border-radius: 6px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    
+    .timeline-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+      transition: width 0.1s ease;
+    }
+    
+    .timeline-subtitle {
+      position: absolute;
+      top: 4px;
+      height: 40px;
+      background: rgba(59, 130, 246, 0.7);
+      border: 2px solid #3b82f6;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 4px;
+    }
+    
+    .timeline-subtitle:hover {
+      background: rgba(59, 130, 246, 0.9);
+      transform: translateY(-2px);
+    }
+    
+    .timeline-subtitle.selected {
+      background: rgba(251, 191, 36, 0.7);
+      border-color: #f59e0b;
+    }
+    
+    .timeline-current {
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: #ef4444;
+      z-index: 20;
+      transition: left 0.1s ease;
+    }
+    
+    /* Button animations */
+    .btn-animate {
+      transition: all 0.2s ease;
+    }
+    
+    .btn-animate:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-animate:active {
+      transform: translateY(0);
+    }
+    
+    /* Form enhancements */
+    .form-input {
+      transition: all 0.2s ease;
+      border: 1px solid #d1d5db;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .form-input.persian {
+      font-family: 'Vazir', 'Tahoma', 'Arial', sans-serif;
+      direction: rtl;
+      text-align: right;
+    }
+    
+    /* Validation indicators */
+    .validation-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    
+    .validation-error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+    
+    .validation-warning {
+      background: #fffbeb;
+      color: #d97706;
+      border: 1px solid #fed7aa;
+    }
+    
+    .validation-success {
+      background: #f0fdf4;
+      color: #16a34a;
+      border: 1px solid #bbf7d0;
+    }
+    
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .subtitle-overlay {
+        font-size: 16px;
+        max-width: 90%;
+        bottom: 10px;
+      }
+      
+      .timeline-container {
+        height: 40px;
+      }
+      
+      .timeline-subtitle {
+        top: 2px;
+        height: 36px;
+      }
+    }
+    
+    /* Dark mode support (future enhancement) */
+    @media (prefers-color-scheme: dark) {
+      .video-container {
+        background: #111;
+      }
+    }
+    
+    /* Print styles */
+    @media print {
+      .video-container,
+      .timeline-container,
+      button {
+        display: none !important;
+      }
+      
+      .subtitle-list {
+        background: white !important;
+      }
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>Bilingual Translation Hub</h1>
-            <p>English ↔ Persian Translator</p>
-        </header>
-
-        <main class="main-content">
-            <div class="language-selector">
-                <button id="swap-languages" class="swap-btn" aria-label="Swap languages">
-                    <span class="swap-icon">⇄</span>
-                </button>
-            </div>
-
-            <div class="translation-area">
-                <div class="input-section">
-                    <div class="language-header">
-                        <select id="source-lang" class="lang-select">
-                            <option value="en">English</option>
-                            <option value="fa">Persian</option>
-                        </select>
-                    </div>
-                    <textarea 
-                        id="source-text" 
-                        class="text-input" 
-                        placeholder="Enter text to translate..."
-                        dir="auto"
-                    ></textarea>
-                </div>
-
-                <div class="action-section">
-                    <button id="translate-btn" class="translate-btn">
-                        Translate
-                    </button>
-                </div>
-
-                <div class="output-section">
-                    <div class="language-header">
-                        <select id="target-lang" class="lang-select">
-                            <option value="fa">Persian</option>
-                            <option value="en">English</option>
-                        </select>
-                    </div>
-                    <textarea 
-                        id="translated-text" 
-                        class="text-output" 
-                        placeholder="Translation will appear here..."
-                        dir="auto"
-                        readonly
-                    ></textarea>
-                </div>
-            </div>
-
-            <div class="controls">
-                <button id="clear-btn" class="control-btn">Clear All</button>
-                <button id="copy-btn" class="control-btn">Copy Translation</button>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <p>Bilingual Translation Hub &copy; 2023</p>
-        </footer>
-    </div>
-
-    <script src="./main.js"></script>
+<body class="font-english">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
